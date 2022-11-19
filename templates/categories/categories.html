@@ -1,0 +1,22 @@
+{% extends 'layouts/layouts.html' %}
+{% block content %}
+    <style type="text/css">
+        .category {
+            display: flex;
+            justify-content: space-between;
+            margin-left: 10%;
+            width: 80%;
+            flex-wrap: wrap;
+        }
+    </style>
+    <div class="category">
+        {% for category in category %}
+            <div class="card" style="width: 20%;">
+                <div class="card_body">
+                    <h5>{{ category.name }}</h5>
+                    <a href="#" class="btn btn-primary">More</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

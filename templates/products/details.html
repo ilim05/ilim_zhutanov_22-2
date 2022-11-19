@@ -1,0 +1,38 @@
+{% extends 'layouts/layouts.html' %}
+
+{% block content %}
+    <style>
+        .product {
+            width: 70%;
+            margin-left: 15%;
+        }
+        .review {
+            width: 70%;
+            margin-left: 15%;
+        }
+        .review {
+            background: #242b2e;
+            color: #fff;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+    </style>
+    <div class="product">
+        <div class="info">
+            <div style="display: flex; justify-content: space-between">
+                <h1>{{ products.price }}</h1>
+                <h1>{{ products.author.username }}</h1>
+            </div>
+            <h5>{{ product.name }}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="review">
+        {% for review in reviews %}
+            <div class="review">
+                <p class="author">{{ review.author }}</p>
+                <p class="text">{{ review.text }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
