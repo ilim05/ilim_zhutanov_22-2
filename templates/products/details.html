@@ -18,12 +18,15 @@
         }
     </style>
     <div class="product">
+        <div class="img">
+            <img src="/media/{{ products.image }}/" alt="">
+        </div>
         <div class="info">
             <div style="display: flex; justify-content: space-between">
-                <h1>{{ products.price }}</h1>
+                <h1>{{ products.name }}</h1>
                 <h1>{{ products.author.username }}</h1>
             </div>
-            <h5>{{ product.name }}</h5>
+            <h5>{{ products.text }}</h5>
             </div>
         </div>
     </div>

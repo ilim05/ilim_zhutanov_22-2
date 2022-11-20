@@ -1,21 +1,30 @@
 {% extends 'layouts/layouts.html' %}
 {% block content %}
     <style type="text/css">
-        .category {
+        .category{
             display: flex;
             justify-content: space-between;
-            margin-left: 10%;
+            width: 20%;
+        }
+        .category{
+            display: flex;
+            justify-content: space-between;
             width: 80%;
-            flex-wrap: wrap;
+            margin-left: 10%;
+        }
+        .category > img{
+            width: 35px;
         }
     </style>
     <div class="category">
-        {% for category in category %}
-            <div class="card" style="width: 20%;">
-                <div class="card_body">
-                    <h5>{{ category.name }}</h5>
-                    <a href="#" class="btn btn-primary">More</a>
-                </div>
+        {% for category in categories %}
+            <div class="category">
+                <img src="/media/{{ category.image }}" alt="">
+                <h3>
+                    <a href="/products/?category_id={{ category.id }}">
+                        {{ category.name }}
+                    </a>
+                </h3>
             </div>
         {% endfor %}
     </div>

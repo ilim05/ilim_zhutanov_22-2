@@ -3,12 +3,17 @@ from products.models import Product, Category, Review
 # Create your views here.
 def products_view(request):
     if request.method == "GET":
+        category_id = request.GET.get("category_id")
+        if category_id:
+            products = Product.objects.filter(categories__in=[category_id])
+        else:
+            products = Product.objects.all()
         products = [{
             'id': product.id,
             'name': product.name,
             'price': product.price,
-            'category': product.category
-        } for product in Product.objects.all()]
+            'categories': product.categories.all()
+        } for product in products]
 
         data = {
             'products': products
@@ -17,13 +22,13 @@ def products_view(request):
         return render(request, 'products/products.html', context=data)
 
 
-def categories_view(request):
+def categories_view(request, **kwargs):
     if request.method == "GET":
-        category = Category.objects.all()
-        data_1 = {
-            'category': category
+        categories = Category.objects.all()
+        data = {
+            'categories': categories
         }
-        return render(request, 'categories/categories.html', context=data_1)
+        return render(request, 'categories/categories.html', context=data)
 
 
 def detail_product_view(request, id):
@@ -32,7 +37,7 @@ def detail_product_view(request, id):
         reviews = Review.objects.filter(product_id=id)
         data = {
             'products': products,
-            'category': products.category.name,
+            'categories': products.categories.name,
             'reviews': reviews
         }
         return render(request, 'products/details.html', context=data)

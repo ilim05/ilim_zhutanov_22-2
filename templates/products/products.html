@@ -8,12 +8,19 @@
             width: 80%;
             flex-wrap: wrap;
         }
+        .product > img{
+            width: 35px;
+        }
     </style>
     <div class="products">
         {% for product in products %}
             <div class="card" style="width: 20%;">
                 <div class="card_body">
                     <h5>{{ product.name }}</h5>
+                    {% for category in product.categories %}
+                        <div>{{ category.name }}</div>
+                    {% endfor %}
+                    <h5>{{ product.price }}</h5>>
                     <a href="/products/{{ product.id }}/" class="btn btn-primary">More</a>
                 </div>
             </div>
