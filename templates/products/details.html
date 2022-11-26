@@ -30,6 +30,13 @@
             </div>
         </div>
     </div>
+    <div class="create_comment">
+        <form action="/products/{{ products.id }}/" method="product">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" class="btn btn-primary" value="Оставить комментарий">
+        </form>
+    </div>
     <div class="review">
         {% for review in reviews %}
             <div class="review">
