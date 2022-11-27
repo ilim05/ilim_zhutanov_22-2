@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from products.models import Product, Category, Review
 from products.forms import ProductCreateForm, ReviewCreateForm
-
+from users.utils import get_user_from_request
 def products_view(request):
     if request.method == "GET":
         category_id = request.GET.get("category_id")
@@ -17,7 +17,8 @@ def products_view(request):
         } for product in products]
 
         data = {
-            'products': products
+            'products': products,
+            'user': get_user_from_request(request)
         }
 
         return render(request, 'products/products.html', context=data)
@@ -41,18 +42,19 @@ def detail_product_view(request, id):
             'categories': products.categories.name,
             'reviews': reviews,
             'form': ReviewCreateForm,
+            'user': get_user_from_request(request)
         }
         return render(request, 'products/details.html', context=data)
-    if request.method == 'PRODUCT':
-        form = ReviewCreateForm(data=request.PRODUCT)
+    if request.method == 'POST':
+        form = ReviewCreateForm(data=request.POST)
 
         if form.is_valid():
             Review.objects.create(
-                author_id=2,
+                author_id=1,
                 text=form.cleaned_data.get('text'),
-                product_id=id,
+                product_id=id
             )
-            return redirect('/products/{id}/')
+            return redirect(f'/products/{id}/')
         else:
             products = Product.objects.get(id=id)
             reviews = Review.objects.filter(product_id=id)
@@ -61,17 +63,19 @@ def detail_product_view(request, id):
                 'categories': products.categories.name,
                 'reviews': reviews,
                 'form': form,
+                'user': get_user_from_request(request)
             }
             return render(request, 'products/detail.html', context=data)
 
 def product_create_form(request):
     if request.method == "GET":
         data = {
-            'form': ProductCreateForm
+            'form': ProductCreateForm,
+            'user': get_user_from_request(request)
         }
-        return render(request, 'products/create.html', context=data)
-    if request.method == 'PRODUCT':
-        form = ProductCreateForm(data=request.PRODUCT)
+        return render(request, 'products/create_form.html', context=data)
+    if request.method == 'POST':
+        form = ProductCreateForm(data=request.POST)
 
         if form.is_valid():
             Product.objects.create(
@@ -83,6 +87,7 @@ def product_create_form(request):
             return redirect('/products')
         else:
             data = {
-                'form': form
+                'form': form,
+                'user': get_user_from_request(request)
             }
             return render(request, 'products/create.html', context=data)

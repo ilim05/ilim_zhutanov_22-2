@@ -1,6 +1,6 @@
 from django.urls import path
-from products.views import products_view, categories_view, detail_product_view
-from products.views import product_create_form
+from products.views import products_view, categories_view, detail_product_view, product_create_form
+
 
 
 urlpatterns = [
