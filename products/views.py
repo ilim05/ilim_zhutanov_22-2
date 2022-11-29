@@ -50,7 +50,7 @@ def detail_product_view(request, id):
 
         if form.is_valid():
             Review.objects.create(
-                author_id=1,
+                author_id=5,
                 text=form.cleaned_data.get('text'),
                 product_id=id
             )
